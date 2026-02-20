@@ -3,7 +3,7 @@ cask "cops" do
   name "cops"
   desc "The deterministic package manager for your GitHub Copilot agent files"
   homepage "https://github.com/cbout22/copilot-sync"
-  version "0.0.2"
+  version "0.0.3"
 
   livecheck do
     skip "Auto-generated on release."
@@ -14,22 +14,28 @@ cask "cops" do
   on_macos do
     on_intel do
       url "https://github.com/cbout22/copilot-sync/releases/download/v#{version}/cops_#{version}_darwin_amd64.tar.gz"
-      sha256 "dc03251ed2b2e702170419438ab7c47df51c2930929fc47d3f513c06b984591b"
+      sha256 "aa06581466a8e22afa6ebb5a57944d3c672e7f2f4fe33bda39c1dae33e0004c6"
     end
     on_arm do
       url "https://github.com/cbout22/copilot-sync/releases/download/v#{version}/cops_#{version}_darwin_arm64.tar.gz"
-      sha256 "896e0bd4641bbbb474a3fd603ace1181e110cab26c91afb3a3fba637b878ceda"
+      sha256 "414283985c2b47b068232edacfb0d142681c76445a20a4704d266929a97e58e0"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/cbout22/copilot-sync/releases/download/v#{version}/cops_#{version}_linux_amd64.tar.gz"
-      sha256 "bd3442cdfa2b9abc2284cc3a39939a7457ed903792ba97e3daa320c379943809"
+      sha256 "7b6f3ceb89b4a23753e2a2f3571f667eb95019c269dd63721a1db44d1c597532"
     end
     on_arm do
       url "https://github.com/cbout22/copilot-sync/releases/download/v#{version}/cops_#{version}_linux_arm64.tar.gz"
-      sha256 "df26c04ff73b225af91a73173ce45cfb8250b1eff01a1b5dba9b08d2b1006986"
+      sha256 "b0b49ac6f3f33f411f68bc486d97d6dd575cbbb6eeb617d9ee35113648fd8efa"
+    end
+  end
+
+  postflight do
+    if OS.mac?
+      system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/cops"]
     end
   end
 
